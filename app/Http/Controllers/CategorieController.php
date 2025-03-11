@@ -13,7 +13,8 @@ class CategorieController extends Controller
      */
     public function index()
     {
-        //
+        $categorie=categorie::all();
+        return response()->json($categorie);
     }
 
     /**
@@ -29,7 +30,16 @@ class CategorieController extends Controller
      */
     public function store(StorecategorieRequest $request)
     {
-        //
+        
+        $validatedData = $request->validate([
+            'nom' => 'required|max:100'
+        ]);
+
+        $rayon = categorie::create([
+            'nom' => $validatedData['nom']  
+        ]);
+    
+        return response()->json($rayon, 201);
     }
 
     /**
@@ -37,7 +47,8 @@ class CategorieController extends Controller
      */
     public function show(categorie $categorie)
     {
-        //
+        return response()->json($categorie);
+
     }
 
     /**
@@ -46,7 +57,13 @@ class CategorieController extends Controller
     
     public function edit(categorie $categorie)
     {
-        //
+        $validatedata= $categorie->validate([
+            'nom'=>'nullable|max:100'
+
+        ]);
+
+        $categorie->save();
+        return response()->json($categorie);
     }
 
     /**
@@ -62,6 +79,7 @@ class CategorieController extends Controller
      */
     public function destroy(categorie $categorie)
     {
-        //
+        $categorie->delete();
+        return response()->json();
     }
 }
