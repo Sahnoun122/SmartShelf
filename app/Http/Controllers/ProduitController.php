@@ -13,7 +13,8 @@ class ProduitController extends Controller
      */
     public function index()
     {
-        //
+        $rayon=produit::all();
+        return response()->json($rayon);
     }
 
     /**
@@ -29,7 +30,27 @@ class ProduitController extends Controller
      */
     public function store(StoreproduitRequest $request)
     {
-        //
+        $validatedData = $request->validate([
+            'nouveauPrix' => 'required|max:100',
+            'ancienPrix' => 'required|max:100',
+            'dateDebut' => 'required|max:100',
+            'dateFin' => 'required|max:100',
+            'status' => 'required|max:100',    
+            'id_produit' => 'required|max:100',
+
+        ]);
+    
+        $produit = produit::create([
+            'nouveauPrix' => $validatedData['nouveauPrix'],
+            'ancienPrix' => $validatedData['nancienPrixom'],
+            'dateDebut' => $validatedData['dateDebut'],
+            'dateFin' => $validatedData['dateFin'],
+            'status' => $validatedData['status'],
+            'id_produit' => $validatedData['id_produit'],
+
+        ]);
+    
+        return response()->json($produit, 201);
     }
 
     /**
@@ -53,7 +74,18 @@ class ProduitController extends Controller
      */
     public function update(UpdateproduitRequest $request, produit $produit)
     {
-        //
+        $validatedata= $request->validate([
+            'nouveauPrix'=>'nullable|max:100',
+            'ancienPrix'=>'nullable|max:100',
+            'dateDebut'=>'nullable|max:100',
+            'dateFin'=>'nullable|max:100',
+            'status'=>'nullable|max:100',
+            'id_produit'=>'nullable|max:100',
+
+        ]);
+
+        $produit->save();
+        return response()->json($produit);
     }
 
     /**
@@ -61,6 +93,7 @@ class ProduitController extends Controller
      */
     public function destroy(produit $produit)
     {
-        //
+        $produit->delete();
+        return response()->json();
     }
 }
