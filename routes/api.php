@@ -3,7 +3,7 @@
 use App\Http\Controllers\RayonController;
 use App\Http\Controllers\ProduitController;
 use App\Http\Controllers\CategorieController;
-use App\Http\Controllers\TestController;
+use App\Http\Controllers\PromotionController;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -12,17 +12,11 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-// Route::post('test',[TestController::class,'store']);
-
-
-
-
 Route::apiResource('rayon', RayonController::class);
-
-
-// Route::post('rayon', [RayonController::class], 'store');
-
 Route::apiResource('categorie', CategorieController::class);
+
+Route::apiResource('promotion', PromotionController::class);
+
 
 Route::apiResource('produit', ProduitController::class);
 
