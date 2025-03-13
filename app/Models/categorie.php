@@ -4,18 +4,18 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\produit;
+use App\Models\User;
 
 class categorie extends Model
 {
     /** @use HasFactory<\Database\Factories\CategorieFactory> */
     use HasFactory;
 
-    protected $fillable = ['nom' , 'id_produit'];
+    protected $fillable = ['nom' , 'id_admin'];
 
-    public function produit(){
+    public function user(){
 
-        $this->belongsTo(produit::class , 'id_produit');
+        $this->belongsTo(User::class , 'id_admin');
     }
 }
 

@@ -6,8 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\StorerayonRequest;
 use App\Http\Requests\UpdaterayonRequest;
-
-class RayonController extends Controller
+class TestController extends Controller
 {
     public function index()
     {
@@ -26,19 +25,19 @@ class RayonController extends Controller
     {
         $validatedData = $request->validate([
             'nom' => 'required|max:100',
-            'id_admin' => 'required|exists:users,id'
+            // 'id_admin' => 'required|exists:users,id'
         ]);
 
-        $rayonId = DB::table('rayons')->insertGetId([
+        $rayon = DB::table('rayons')->insert([
             'nom' => $validatedData['nom'],
-            'id_admin' => $validatedData['id_admin'],
-            'created_at' => now(),
-            'updated_at' => now()
+            // 'id_admin' => $validatedData['id_admin'],
+            // 'created_at' => now(),
+            // 'updated_at' => now()
         ]);
 
-        $rayon = DB::table('rayons')->where('id', $rayonId)->first();
+       
         
-        return response()->json($rayon, 201);
+        return response()->json(['message'=>'Insertion Avec Succes']);
     }
 
     public function show($id)
@@ -77,14 +76,6 @@ class RayonController extends Controller
             $dataToUpdate['nom'] = $validatedata['nom'];
         }
         
-        if (isset($validatedata['id_admin'])) {
-            $dataToUpdate['id_admin'] = $validatedata['id_admin'];
-        }
-        
-        if (!empty($dataToUpdate)) {
-            $dataToUpdate['updated_at'] = now();
-            DB::table('rayons')->where('id', $id)->update($dataToUpdate);
-        }
         
         $updatedRayon = DB::table('rayons')->where('id', $id)->first();
         

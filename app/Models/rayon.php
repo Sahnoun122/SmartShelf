@@ -10,9 +10,9 @@ class rayon extends Model
     /** @use HasFactory<\Database\Factories\RayonFactory> */
     use HasFactory;
 
-    protected $fillable= ['nom' , 'id_admin'];
+    protected $fillable= ['nom' ];
     
-    public function admin(){
-        $this->belongsTo(User::class, 'id_admin');
-    }
+    // public function admin(){
+    //     $this->belongsTo(User::class, 'id_admin');
+    // }
 }

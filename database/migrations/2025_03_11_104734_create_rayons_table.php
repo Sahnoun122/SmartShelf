@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('rayons', function (Blueprint $table) {
             $table->id();
+            
             $table->string('nom');
             $table->unsignedInteger('id_admin');
             $table->foreign('id_admin')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');

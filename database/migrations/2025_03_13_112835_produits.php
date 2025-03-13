@@ -21,8 +21,8 @@ return new class extends Migration
             $table->foreign('id_admin')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->unsignedInteger('id_rayon');
             $table->foreign('id_rayon')->references('id')->on('rayons')->onDelete('cascade')->onUpdate('cascade');
-
-
+            $table->unsignedInteger('id_categorie');
+            $table->foreign('id_categorie')->references('id')->on('categories');
             $table->timestamps();
         });
     }

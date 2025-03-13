@@ -20,13 +20,15 @@ class ProduitController extends Controller
             ->select(
                 'produits.*',
                 'rayons.nom as rayon_nom',
-                'users.name as admin_nom'
+                'users.nom as admin_nom'
             )
             ->get();
 
         return response()->json($produits);
     }
 
+
+  
     /**
      * Show the form for creating a new resource.
      */
@@ -38,7 +40,7 @@ class ProduitController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreproduitRequest $request)
+    public function store(Request $request)
     {
         $validatedData = $request->validate([
             'nom' => 'required|max:100',
@@ -74,7 +76,7 @@ class ProduitController extends Controller
             ->select(
                 'produits.*',
                 'rayons.nom as rayon_nom',
-                'users.name as admin_nom'
+                'users.nom as admin_nom'
             )
             ->where('produits.id', $id)
             ->first();
@@ -92,7 +94,7 @@ class ProduitController extends Controller
         //
     }
 
-    public function update(UpdateproduitRequest $request, $id)
+    public function update(Request $request, $id)
     {
         $validatedata = $request->validate([
             'nom' => 'nullable|max:100',
