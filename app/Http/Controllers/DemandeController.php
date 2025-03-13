@@ -3,11 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\demande;
-use App\Http\Requests\StoredemandeRequest;
+use Illuminate\Support\Facades\DB;
+
+use Illuminate\Http\Request;
 use App\Http\Requests\UpdatedemandeRequest;
+// use GuzzleHttp\Psr7\Request;
 
 class DemandeController extends Controller
 {
+
+
+
+
     /**
      * Display a listing of the resource.
      */
@@ -27,7 +34,7 @@ class DemandeController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoredemandeRequest $request)
+    public function store(Request $request)
     {
         //
     }
@@ -51,7 +58,7 @@ class DemandeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdatedemandeRequest $request, demande $demande)
+    public function update(Request $request, demande $demande)
     {
         //
     }
@@ -63,4 +70,42 @@ class DemandeController extends Controller
     {
         //
     }
+   
+    public function consulterProduit($id_rayon){
+        $produits= DB::table('produits')
+              ->join('rayons', 'produits.id_rayon' , '=' , 'rayons.id')
+              ->where('rayons.id' , $id_rayon)
+              ->select('produits.*')
+              ->get();
+
+              return response()->json($produits);
+    }
+
+
+    public function rechercheProduit(Request $request){
+
+        $recherche= $request->input('recherche');
+
+        $produits =DB::table('produits')
+        ->join('categories' , 'produits.id_categorie' , '=' , 'categories.id')
+        ->where('produits.nom' , 'LIKE',"%{$recherche}%")
+        ->orWhere('categories.nom' , "LIKE" , "%{$recherche}%")
+        ->select('produits.*')
+        ->get();
+ 
+        return response()->json($produits);
+    }
+
+   public function produitsPopulaire($id_rayon){
+
+    //populaires
+    $populaire= DB::table('produits')
+    ->join('rayons' , 'produits.id_rayon' , '=' , 'rayons.id')
+    ->where('rayons.id' , $id_rayon)
+    ->orderBy('produits.nom' , 'DESC')
+    ->limi(10)
+    ->select('produits.*')
+    ->get();
+
+   }
 }
